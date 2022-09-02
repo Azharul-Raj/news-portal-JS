@@ -38,5 +38,9 @@ const loadBlogs = async (id) => {
 }
 // display blogs part
 const displayBlogs = async (blogs) => {
-    console.log(blogs)
+    blogs.forEach(blog => {
+        console.log(blog)
+        const { image_url, title, details, author, total_view, _id, thumbnail_url } = blog
+        const {img,name,published_date}= author
+    })
 }
