@@ -20,9 +20,23 @@ const displayCategory = async (categories) => {
         <button onclick="loadBlogs('${category_id}')" class="border border-0 bg-transparent">${category_name}</button>
         `
         categoryContainer.appendChild(span)
+        loading(true)
     })
 }
-
+// spinner part start
+const loading = (isLoading) => {
+  const loading = document.getElementById('loading')
+  if (isLoading === true) {
+    loading.classList.remove('d-none')
+    console.log('if')
+  }
+  else {
+    console.log('else')
+    loading.classList.add('d-none')
+  }
+  loading.textContent = ''
+}
+// spinner part end
 loadCategory()
 // load blog part
 const loadBlogs = async (id) => {
@@ -46,7 +60,7 @@ const displayBlogs = async (blogs) => {
         const { img, name, published_date } = author
         const div = document.createElement('div')
         div.innerHTML = `
-        <div class="card mb-3" style="max-width: 1040px;">
+        <div class="card mb-3 shadow-lg" style="max-width: 1040px;">
         <div class="row g-0">
           <div class="col-md-4">
             <img src="${image_url}" class="img-fluid rounded-start" alt="...">
@@ -70,8 +84,14 @@ const displayBlogs = async (blogs) => {
                       </div>
                       <!-- author details showing part end -->
                    </div>
-                    <div class="col-lg-4">2</div>
-                    <div class="col-lg-4 justify-content-end">3</div>
+                    <div class="col-lg-4">
+                      <p><i class="fa-solid fa-eye"></i> ${total_view}</p>
+                    </div>
+                    <div class="col-lg-4 justify-content-end">
+                      <button onclick="showDetails(${_id})" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                         View Details <i class="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
                 </div>
                 <!-- card footer part end -->
             </div>
@@ -81,4 +101,18 @@ const displayBlogs = async (blogs) => {
         `
         blogList.appendChild(div)
     })
+  loading(false)
+}
+
+// modal showing function
+const showDetails = async (id) => {
+  console.log(id)
+  try {
+      const res = await fetch(`https://openapi.programming-hero.com/api/news/${id}`)
+      const data = await res.json()
+      displayBlogs(data.data)
+  }
+  catch (error) {
+      console.log(error)
+  }
 }
