@@ -25,11 +25,18 @@ const displayCategory = async (categories) => {
 
 loadCategory()
 // load blog part
-const loadBlogs = async(id) => {
+const loadBlogs = async (id) => {
+    console.log(id)
     try {
-        const res = await fetch(``)
+        const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
+        const data = await res.json()
+        displayBlogs(data.data)
     }
     catch (error) {
         console.log(error)
     }
+}
+// display blogs part
+const displayBlogs = async (blogs) => {
+    console.log(blogs)
 }
