@@ -9,7 +9,27 @@ const loadCategory = async() => {
         console.log(error)
     }
 }
-const displayCategory = async (categorys) => {
-    console.log(categorys)
+const displayCategory = async (categories) => {
+    const categoryContainer = document.getElementById('category')
+    categories.forEach(category => {
+        const { category_name, category_id } = category
+        const span = document.createElement('span')
+        span.classList.add('me-4')
+        span.innerHTML = `
+        
+        <button onclick="loadBlogs('${category_id}')" class="border border-0 bg-transparent">${category_name}</button>
+        `
+        categoryContainer.appendChild(span)
+    })
 }
+
 loadCategory()
+// load blog part
+const loadBlogs = async(id) => {
+    try {
+        const res = await fetch(``)
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
