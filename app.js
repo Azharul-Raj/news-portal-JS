@@ -1,5 +1,4 @@
-let categoryName;
-const newsCount = document.getElementsByClassName('count')
+
  // category api call
 const loadCategory = async() => {
     try {
@@ -24,13 +23,13 @@ const displayCategory = async (categories) => {
       
       `
       categoryContainer.appendChild(span)
-      loading(true)
+      // loading(true)
       categoryName = category_name
       
     })
   }
 // spinner part start
-const loading = (isLoading) => {
+const loading = async(isLoading) => {
   const loading = document.getElementById('loading')
   if (isLoading === true) {
     loading.classList.remove('d-none')
@@ -40,18 +39,18 @@ const loading = (isLoading) => {
     console.log('else')
     loading.classList.add('d-none')
   }
-  loading.textContent = ''
+  // loading.textContent = ''
 }
 // spinner part end
 loadCategory()
 // load blog part
 const loadBlogs = async (id) => {
-    console.log(id)
   if (id) {
     try {
       const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
       const data = await res.json()
-      displayBlogs(data.data,data.status)
+      displayBlogs(data.data, data.status)
+      // loading(true)
   }
   catch (error) {
       console.log(error)
@@ -69,13 +68,32 @@ const loadBlogs = async (id) => {
   }
 }
 // display blogs part
-const displayBlogs = async (blogs,status) => {
-  const blogLength =await blogs.length
+const displayBlogs =  (blogs, status) => {
+  const blogLength = blogs.length
   console.log(status)
+  // blog length showing part start
   const blogList = document.getElementById('blog-list')
+  const showLengthContainer = document.getElementById('show-avilable')
+  showLengthContainer.textContent = ``
+  if (blogLength > 0) {
+    console.log('if')
+    showLengthContainer.innerHTML = `
+    <h2>${blogLength}  news found..</h2>
+    `
+  }
+  else {
+    console.log('i am here')
+    showLengthContainer.innerHTML = `
+    <h2>No  news found</h2>
+    `
+  }
   // get total views
   // const view = []
-  
+  // array shorting here
+  blogs.sort(function (a,b) {
+    return b.total_view -a.total_view
+  })
+  // array shorting here
   blogList.textContent = ''
     blogs.forEach(blog => {
         console.log(blog)
@@ -101,8 +119,8 @@ const displayBlogs = async (blogs,status) => {
                           <img style="height:30px; width:30px" class="rounded-circle" src="${img}" alt="">
                         </div>
                         <div class="col-md-10 col-sm-10">
-                         <p class="fw-bold">${name? name:'no name found'}</p>
-                         <p class="date">${published_date? published_date: 'date is not avilable'}</p>
+                         <p class="fw-bold">${name? name:'No Data Found'}</p>
+                         <p class="date">${published_date? published_date: 'No Data Found'}</p>
                         </div>
                       </div>
                       <!-- author details showing part end -->
@@ -123,17 +141,12 @@ const displayBlogs = async (blogs,status) => {
       </div>
         `
       blogList.appendChild(div)
-      // blog length showing part start
-      const showLengthContainer = document.getElementById('show-avilable')
-      showLengthContainer.textContent = ``
-      showLengthContainer.innerHTML = `
-      <h2>${newsCount.length > 0 && status === true?newsCount.length:'i am 0'}  news found</h2>
-      `
+      
+      loading(false)
       // blog length showing part end
     })
-    console.log(newsCount.length)
-  // sorting 
-  loading(false)
+    // sorting 
+    // loading(false)
 }
 
 // load author info function
@@ -160,7 +173,7 @@ const showDetails = async (singleData) => {
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
        </div>
        <div class="modal-body">
-         <img class="image-fluid h-50 w-100" src="${thumbnail_url}" alt="">
+         <img style="height:350px" class="image-fluid w-100" src="${thumbnail_url}" alt="">
          <!-- author details && publish date side by side -->
          <div class="d-flex justify-content-around">
            <p class="fw-bold">Author : ${name?name:'no name found'}</p>
@@ -176,3 +189,5 @@ const showDetails = async (singleData) => {
 
 
 loadBlogs()
+
+// complete
