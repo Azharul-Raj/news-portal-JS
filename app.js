@@ -1,4 +1,5 @@
-// category api call
+let categoryName;
+ // category api call
 const loadCategory = async() => {
     try {
         const res = await fetch('https://openapi.programming-hero.com/api/news/categories')
@@ -12,17 +13,19 @@ const loadCategory = async() => {
 const displayCategory = async (categories) => {
     const categoryContainer = document.getElementById('category')
     categories.forEach(category => {
-        const { category_name, category_id } = category
-        const span = document.createElement('span')
-        span.classList.add('me-4')
-        span.innerHTML = `
-        
-        <button onclick="loadBlogs('${category_id}')" class="border border-0 bg-transparent">${category_name}</button>
-        `
-        categoryContainer.appendChild(span)
-        loading(true)
+      const { category_name, category_id } = category
+      const span = document.createElement('span')
+      span.classList.add('me-4')
+      span.innerHTML = `
+      
+      <button onclick="loadBlogs('${category_id}')" class="border border-0 bg-transparent">${category_name}</button>
+      `
+      categoryContainer.appendChild(span)
+      loading(true)
+      categoryName = category_name
     })
-}
+  }
+  console.log(categoryName)
 // spinner part start
 const loading = (isLoading) => {
   const loading = document.getElementById('loading')
@@ -52,6 +55,8 @@ const loadBlogs = async (id) => {
 }
 // display blogs part
 const displayBlogs = async (blogs) => {
+  const blogLength = blogs.length
+  console.log(blogLength)
   const blogList = document.getElementById('blog-list')
   blogList.textContent = ''
     blogs.forEach(blog => {
@@ -99,7 +104,13 @@ const displayBlogs = async (blogs) => {
         </div>
       </div>
         `
-        blogList.appendChild(div)
+      blogList.appendChild(div)
+      // blog length showing part start
+      const showLengthContainer = document.getElementById('length-container')
+      showLengthContainer.innerHTML = `
+       <h2>${blogLength? blogLength : '0'} item found for category ${categoryName}</h2>
+      `
+      // blog length showing part end
     })
   loading(false)
 }
@@ -120,5 +131,27 @@ const showDetails = async (singleData) => {
   const { title, author, details, thumbnail_url, total_view } = singleData
   const { name, published_date } = author
   console.log(name, published_date)
-  
+  const detailsModal = document.getElementById('show-details')
+  detailsModal.innerHTML = `
+       <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">${title}</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <img class="image-fluid h-25 w-100" src="${thumbnail_url}" alt="">
+         <!-- author details && publish date side by side -->
+         <div class="d-flex justify-content-around">
+           <p class="fw-bold">Author : ${name}</p>
+           <p><i class="fa-solid fa-eye"></i> ${total_view}</p>
+           <p><i class="fa-sharp fa-solid fa-clock"></i> ${published_date}</p>
+           </div>
+           <p>${details}</p>
+         <!-- author details && publish date side by side -->
+       </div>
+     </div>
+  `
 }
+
+loadBlogs('02')
+displayBlogs()
