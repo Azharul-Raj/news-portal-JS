@@ -11,6 +11,7 @@ const loadCategory = async() => {
     }
 }
 const displayCategory = async (categories) => {
+  const catArr = []
     const categoryContainer = document.getElementById('category')
     categories.forEach(category => {
       const { category_name, category_id } = category
@@ -19,13 +20,14 @@ const displayCategory = async (categories) => {
       span.innerHTML = `
       
       <button onclick="loadBlogs('${category_id}')" class="border border-0 bg-transparent">${category_name}</button>
+      
       `
       categoryContainer.appendChild(span)
       loading(true)
       categoryName = category_name
+      
     })
   }
-  console.log(categoryName)
 // spinner part start
 const loading = (isLoading) => {
   const loading = document.getElementById('loading')
@@ -55,9 +57,12 @@ const loadBlogs = async (id) => {
 }
 // display blogs part
 const displayBlogs = async (blogs) => {
-  const blogLength = blogs.length
+  const blogLength =await blogs.length
   console.log(blogLength)
   const blogList = document.getElementById('blog-list')
+  // get total views
+  const view = []
+  
   blogList.textContent = ''
     blogs.forEach(blog => {
         console.log(blog)
@@ -76,23 +81,23 @@ const displayBlogs = async (blogs) => {
               <p class="card-text">${details.length > 200? details.slice(0,200)+'....': details}</p>
                 <!-- card footer part start -->
                 <div class="row">
-                   <div class="col-lg-4">
+                   <div class="col-lg-4 col-sm-4">
                       <!-- author details showing part start -->
                       <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-2">
                           <img style="height:30px; width:30px" class="rounded-circle" src="${img}" alt="">
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-10 col-sm-10">
                          <p class="fw-bold">${name? name:'no name found'}</p>
                          <p class="date">${published_date? published_date: 'date is not avilable'}</p>
                         </div>
                       </div>
                       <!-- author details showing part end -->
                    </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-sm-4">
                       <p><i class="fa-solid fa-eye"></i> ${total_view}</p>
                     </div>
-                    <div class="col-lg-4 justify-content-end">
+                    <div class="col-lg-4 col-sm-4 justify-content-end">
                       <button onclick="loadDetails('${_id}')" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                          View Details <i class="fa-solid fa-arrow-right"></i>
                       </button>
@@ -106,12 +111,14 @@ const displayBlogs = async (blogs) => {
         `
       blogList.appendChild(div)
       // blog length showing part start
-      const showLengthContainer = document.getElementById('length-container')
+      const showLengthContainer = document.getElementById('show-avilable')
       showLengthContainer.innerHTML = `
-       <h2>${blogLength? blogLength : '0'} item found for category ${categoryName}</h2>
+       <h2>${blogLength > 0? blogLength: '0'}  news found</h2>
       `
       // blog length showing part end
+      
     })
+  // sorting 
   loading(false)
 }
 
@@ -142,9 +149,9 @@ const showDetails = async (singleData) => {
          <img class="image-fluid h-25 w-100" src="${thumbnail_url}" alt="">
          <!-- author details && publish date side by side -->
          <div class="d-flex justify-content-around">
-           <p class="fw-bold">Author : ${name}</p>
-           <p><i class="fa-solid fa-eye"></i> ${total_view}</p>
-           <p><i class="fa-sharp fa-solid fa-clock"></i> ${published_date}</p>
+           <p class="fw-bold">Author : ${name?name:'no name found'}</p>
+           <p><i class="fa-solid fa-eye"></i> ${total_view?total_view:'no views'}</p>
+           <p><i class="fa-sharp fa-solid fa-clock"></i> ${published_date?published_date:'no date found'}</p>
            </div>
            <p>${details}</p>
          <!-- author details && publish date side by side -->
@@ -153,5 +160,4 @@ const showDetails = async (singleData) => {
   `
 }
 
-loadBlogs('02')
-displayBlogs()
+// loadBlogs("01")
