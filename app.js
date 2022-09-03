@@ -88,7 +88,7 @@ const displayBlogs = async (blogs) => {
                       <p><i class="fa-solid fa-eye"></i> ${total_view}</p>
                     </div>
                     <div class="col-lg-4 justify-content-end">
-                      <button onclick="showDetails(${_id})" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <button onclick="loadDetails('${_id}')" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                          View Details <i class="fa-solid fa-arrow-right"></i>
                       </button>
                     </div>
@@ -104,15 +104,21 @@ const displayBlogs = async (blogs) => {
   loading(false)
 }
 
-// modal showing function
-const showDetails = async (id) => {
-  console.log(id)
+// load author info function
+const loadDetails = async (id) => {
   try {
       const res = await fetch(`https://openapi.programming-hero.com/api/news/${id}`)
       const data = await res.json()
-      displayBlogs(data.data)
+      showDetails(data.data[0])
   }
   catch (error) {
       console.log(error)
   }
+}
+// show details function
+const showDetails = async (singleData) => {
+  const { title, author, details, thumbnail_url, total_view } = singleData
+  const { name, published_date } = author
+  console.log(name, published_date)
+  
 }
