@@ -1,4 +1,5 @@
 let categoryName;
+const newsCount = document.getElementsByClassName('count')
  // category api call
 const loadCategory = async() => {
     try {
@@ -19,7 +20,7 @@ const displayCategory = async (categories) => {
       span.classList.add('me-4')
       span.innerHTML = `
       
-      <button onclick="loadBlogs('${category_id}')" class="border border-0 bg-transparent">${category_name}</button>
+      <button id="btn" onclick="loadBlogs('${category_id}')" class="border border-0 bg-transparent">${category_name}</button>
       
       `
       categoryContainer.appendChild(span)
@@ -46,22 +47,34 @@ loadCategory()
 // load blog part
 const loadBlogs = async (id) => {
     console.log(id)
+  if (id) {
     try {
-        const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
-        const data = await res.json()
-        displayBlogs(data.data)
-    }
-    catch (error) {
-        console.log(error)
-    }
+      const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
+      const data = await res.json()
+      displayBlogs(data.data,data.status)
+  }
+  catch (error) {
+      console.log(error)
+  }
+  }
+  else {
+    try {
+      const res = await fetch(`https://openapi.programming-hero.com/api/news/category/01`)
+      const data = await res.json()
+      displayBlogs(data.data,data.status)
+  }
+  catch (error) {
+      console.log(error)
+  }
+  }
 }
 // display blogs part
-const displayBlogs = async (blogs) => {
+const displayBlogs = async (blogs,status) => {
   const blogLength =await blogs.length
-  console.log(blogLength)
+  console.log(status)
   const blogList = document.getElementById('blog-list')
   // get total views
-  const view = []
+  // const view = []
   
   blogList.textContent = ''
     blogs.forEach(blog => {
@@ -70,7 +83,7 @@ const displayBlogs = async (blogs) => {
         const { img, name, published_date } = author
         const div = document.createElement('div')
         div.innerHTML = `
-        <div class="card mb-3 shadow-lg" style="max-width: 1040px;">
+        <div class="card mb-3 shadow-lg count" style="max-width: 1240px;">
         <div class="row g-0">
           <div class="col-md-4">
             <img src="${image_url}" class="img-fluid rounded-start" alt="...">
@@ -95,7 +108,7 @@ const displayBlogs = async (blogs) => {
                       <!-- author details showing part end -->
                    </div>
                     <div class="col-lg-4 col-sm-4">
-                      <p><i class="fa-solid fa-eye"></i> ${total_view}</p>
+                      <p><i class="fa-solid fa-eye"></i> ${total_view?total_view:'No Views'}</p>
                     </div>
                     <div class="col-lg-4 col-sm-4 justify-content-end">
                       <button onclick="loadDetails('${_id}')" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -112,12 +125,13 @@ const displayBlogs = async (blogs) => {
       blogList.appendChild(div)
       // blog length showing part start
       const showLengthContainer = document.getElementById('show-avilable')
+      showLengthContainer.textContent = ``
       showLengthContainer.innerHTML = `
-       <h2>${blogLength > 0? blogLength: '0'}  news found</h2>
+      <h2>${newsCount.length > 0 && status === true?newsCount.length:'i am 0'}  news found</h2>
       `
       // blog length showing part end
-      
     })
+    console.log(newsCount.length)
   // sorting 
   loading(false)
 }
@@ -146,7 +160,7 @@ const showDetails = async (singleData) => {
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
        </div>
        <div class="modal-body">
-         <img class="image-fluid h-25 w-100" src="${thumbnail_url}" alt="">
+         <img class="image-fluid h-50 w-100" src="${thumbnail_url}" alt="">
          <!-- author details && publish date side by side -->
          <div class="d-flex justify-content-around">
            <p class="fw-bold">Author : ${name?name:'no name found'}</p>
@@ -160,4 +174,5 @@ const showDetails = async (singleData) => {
   `
 }
 
-// loadBlogs("01")
+
+loadBlogs()

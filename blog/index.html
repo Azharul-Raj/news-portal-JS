@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Best News World</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- css link -->
+    <link rel="stylesheet" href="style.css">
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/dd1c04311c.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="container">
+    <header>
+        <!-- navbar part start -->
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Best News World</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <a class="nav-link active" aria-current="page" href="#">News</a>
+                  <a class="nav-link" href="#">Blog</a>
+                  <a class="nav-link" href="#"><i class="fa-solid fa-user"></i></a>
+                </div>
+              </div>
+            </div>
+          </nav>
+        <!-- navbar part end -->
+        <!-- category showing part  -->
+        <div class="row">
+          <div id="category" class="col-lg-12 mt-lg-3 text-center">
+            <!-- <button onclick="loadBlogs()" class="border border-0 me-4 bg-transparent">Home</button> -->
+          </div>
+        </div>
+    </header>
+    <main class="mt-5 h-100">
+        <section>
+            <!-- toggle start -->
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h4>What is difference between var, let and const in JavaScript?</h4>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <p>A variable declaration is simply telling the computer that a variable exists and what value it should start with. Similar to other programming languages JavaScript also allows for the declaration of variables.
+
+                            There are three keywords in JavaScript that can be used to declare variables: let, var, and const. Each keyword has different rules and implications for how the variables they create can be used.
+                            
+                            let: The let keyword declares a block-scoped local variable, optionally initializing it to a value.
+                            Block-scoped means that the variable is only available within the block it was declared in, which is usually denoted by curly braces {}.
+                            
+                            var: The var keyword declares a function-scoped or global variable, optionally initializing it to a value.
+                            Function-scoped means that the variable is only available within the function it was declared in. Global variables are available throughout your entire code.
+                            
+                            const: The const keyword declares a block-scoped, immutable constant variable, i.e. a variable that can’t be reassigned.
+                            Constants are also called “immutable variables”, but that’s a bit of a misnomer since they are actually variables – just ones that can’t be reassigned.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h4>What are the difference among forEach, map, filter, reduce, and find in JavaScript?</h4>
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <p>Many posts discuss how to use .forEach(), .map(), .filter(), .reduce() and .find() on arrays in JavaScript. I thought it would be useful to provide an explanation of when to use the common array methods.
+
+                            .map(), .filter(), .reduce() and .find() all behave very similarly to .forEach() so for now lets just focus on the latter.
+                            
+                            What is forEach? A way to work with items in an array.
+                            If you’re not familiar with the array method .forEach(), whenever you go to iterate over an array you probably immediately think of a for loop.
+                            
+                            The .forEach() method is just a different way of doing this. The following two code examples effectively accomplish the same thing:
+                            
+                            for loop
+                            
+                            var array = [1,2,3];
+                            for (var i = 0; i  array.length; i++){
+                              console.log(i);
+                            }
+                            .forEach()
+                            
+                            var array = [1,2,3];
+                            array.forEach(function(i){
+                              console.log(i);
+                            });
+                            There are however some subtle differences that can have a big impact on your code.
+                            
+                            Why forEach? Ease of Use and Readability.
+                            To me, the most compelling case for using .forEach() in favor of a for loop is that it’s easier. Even though it’s the same number of lines, there’s less setup. With a regular for loop you have three steps:
+                            
+                            Define an iterator value: var i = 0;
+                            Define an end point: i  array.length;
+                            Tell how the loop how should iterate: i++;
+                            With .forEach() you simply pass a function that is executed on each element in the array.
+                            
+                            Why forEach? Scope.
+                            If the fact that it’s easier, isn’t enough for you… there is also a technical reason to use .forEach() in favor of for loops. It has to do with the scoping of the code.
+                            
+                            When using the .forEach() you pass an individual function with it’s own scope. In a for loop you’re polluting whatever scope you place the loop in. Most, if not all, of the time, this is a bad thing.
+                            
+                            When to use forEach?
+                            .forEach() is great you need to execute a function for each individual element in an array. Good practice is that you should use .forEach() when you can’t use other array methods to accomplish your goal. I know this may sound vague, but .forEach() is a generic tool… only use it when you can’t use a more specialized tool.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <h4>Why should we use template string in JavaScript?</h4>
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <p>
+                            Template strings are a powerful feature of modern JavaScript released in ES6. It lets us insert/interpolate variables and expressions into strings without needing to concatenate like in older versions of JavaScript. It allows us to create strings that are complex and contain dynamic elements. Another great thing that comes with template strings are tags. Tags are functions that take a string and the decomposed parts of the string as parameters and are great for converting strings to different entities.
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- toggle end -->
+            
+        </section>
+    </main>
+    <footer class="text-center m-5">
+        <small>Copyright 2021 Best News World</small>
+      </footer>
+      <!-- LINKED JAVASCRIPT -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+      <script src="app.js"></script>
+    </body>
+  </html>
